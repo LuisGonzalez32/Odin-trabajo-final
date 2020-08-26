@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cliente</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <h1>Ingresar Nuevo Cliente</h1>
+        
+         <form action="ClienteServlet" method="get">
+            
+             Nombre:<br>
+            <input type="text" name="nombre" placeholder="nombre" id="nombre"/>
+            <br><br>
+            Numero de telefono:<br>
+            <input type="number" name="numerodetelefono" placeholder="numero de telefono"  id="numerodetelefono"/>
+            <br><br>
+            Correo Electronico:<br>
+            <input type="email" name="correoelectronico" placeholder="correo electronico" id="correoelectronico"/>
+            <br><br>
+            Tarjeta de credito:<br>
+            <input type="password" name="tarjetaCredito" placeholder="Tarjeta de credito" id="tarjetaCredito"/>
+            <br><br>
+            
+            
+            <input type="button" class = "geeks" onclick="getlocation()" value="Obtener ubicación"/>
+            <input type="text" readonly="true" name="latitud" id="latitud" placeholder="latitud" />
+            <input type="text" readonly="true" name="longitud" id="longitud" placeholder="longitud" />
+            <br><br>
+            <input type="submit" value="Ingresar"/>
+            <input type="hidden" name="formid" value="1"/>
+        </form>
+        
+        <script>
+        function getlocation(){ 
+                navigator.geolocation.getCurrentPosition(showLoc); 
+        }   
+        function showLoc(pos){
+                document.getElementById("latitud").value = pos.coords.latitude;
+                document.getElementById("longitud").value = pos.coords.longitude;
+            } 
+        </script> 
+        
+    </body>
+</html>

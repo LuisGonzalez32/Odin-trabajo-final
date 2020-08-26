@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Obtener coordenadas de un marcador </title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        width: 100%;
+        height: 80%;
+      }
+      #coords{width: 500px;}
+    </style>
+  </head>
+  <body >
+    <div id="map"></div>
+
+    <div style="margin-left: 5px; margin-top: 5px;">
+        <input type="text" readonly="true" name="latitud" id="latitud" placeholder="latitud"/>
+        <input type="text" readonly="true" name="longitud" id="longitud" placeholder="longitud" />
+        <br><br>
+        <p><a href="catalogoLugaresTuristicos.html">Regresar al catalogo</a></p>
+    </div>
+
+    <!-- Carga de la libreria de google maps -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
+    <script>
+        var marker;          //variable del marcador
+
+        //Funcion principal
+        initMap = function() {
+            // Usamos la API para geolocalizar el usuario
+            navigator.geolocation.getCurrentPosition(
+              function (position) {
+                //pasamos las coordenadas al metodo para crear el mapa
+                setMapa({ lat: position.coords.latitude, lng: position.coords.longitude});
+              }, function(error){console.log(error);}
+            );
+        }
+
+        function setMapa (coords)
+        {   
+            //Se crea una nueva instancia del objeto mapa
+            var miMapa = new google.maps.Map(
+                        document.getElementById('map'),
+                        {
+                          zoom: 15,
+                          center: new google.maps.LatLng(coords.lat,coords.lng),
+
+                        }
+                    );
+
+            //Creamos el marcador en el mapa con sus propiedades
+            //para nuestro obetivo tenemos que poner el atributo draggable en true
+            //position pondremos las mismas coordenas que obtuvimos en la geolocalización
+            marker = new google.maps.Marker({
+                    map: miMapa,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                    position: new google.maps.LatLng(coords.lat,coords.lng),
+            });
+
+            // Agregamos eventos al marcador junto con la funcion callback a ejecutar
+            // Cuando el usuario hace click en el marcador 
+            marker.addListener('click', activarAnimacion);
+
+            // Cuando el usuario a soltado el marcador
+            marker.addListener( 'dragend', function (event)
+            {
+                // Escribimos las coordenadas de la posicion actual del marcador dentro de los inputs
+                document.getElementById("latitud").value = this.getPosition().lat();
+                document.getElementById("longitud").value = this.getPosition().lng();
+                marker.setAnimation(null);
+            });
+        }
+
+        // Función a ejecutar cuando se hace clic en el marcador
+        // Setea la animación del marcador
+        function activarAnimacion() {
+          if (marker.getAnimation() !== null) {
+            marker.setAnimation(marker.getAnimation());
+          } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+          }
+        }
+
+    </script>
+  </body>
+</html>

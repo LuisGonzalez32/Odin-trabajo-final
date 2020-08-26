@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1> Agregar conductor </h1>
+        
+        <form action="ConductorServlet" method="get">
+            
+            Nombre del conductor:<br>
+            <input type="text" name="nombre" placeholder="Nombre del conductor" id="nombre"/>
+            <br><br>
+            marca de carro:<br>
+            <input type="text" id="marcaDeCarro" placeholder="Marca del carro" name="marcaDeCarro">
+            <br><br>
+            Correo Electronico:<br>
+            <input type="email" name="correoElectronico" placeholder="correo electronico" id="correoElectronico"/>
+            <br><br>
+            Licencia:<br>
+            <input type="number" name="licencia" placeholder="Licencia" id="licencia"/>
+            <br><br>
+            Numero de dui:<br>
+            <input type="number" name="DUI" placeholder="Numero de DUI" id="DUI"/>
+            <br><br>
+            Numero de telefono:<br>
+            <input type="number" name="numeroDeTelefono" placeholder="Numero de telefono" id="numeroDeTelefono"/>
+            <br><br>
+            Antecedentes penales?<br>
+            <input type="checkbox" id="si" name="antecedentes" value="si">
+            <label for="vehicle1"> si</label><br>
+            <input type="checkbox" id="no" name="antecedentes" value="no">
+            <label for="vehicle2"> no</label><br>
+            Cuenta bancaria:<br>
+            <input type="number" name="cuentaBancaria" placeholder="Cuenta bancaria" id="cuentaBancaria"/>
+            <br><br>
+            
+            
+            
+            <input type="button" class = "geeks" onclick="getlocation()" value="Obtener ubicación"/>
+            <input type="text" readonly="true" name="latitud" id="latitud" placeholder="latitud" />
+            <input type="text" readonly="true" name="longitud" id="longitud" placeholder="longitud" />
+            
+            
+            
+            <input type="submit" value="Ingresar"/>
+            <input type="hidden" name="formid" value="1"/>
+        </form>
+    
+        <p><a href="index.html">Regresar al menu</a></p>
+        
+        <script>
+        function getlocation(){ 
+                navigator.geolocation.getCurrentPosition(showLoc); 
+        }   
+        function showLoc(pos){
+                document.getElementById("latitud").value = pos.coords.latitude;
+                document.getElementById("longitud").value = pos.coords.longitude;
+            } 
+        </script> 
+
+    </body>
+</html>
